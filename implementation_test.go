@@ -17,7 +17,7 @@ type testCase struct {
 
 func TestEvaluatePrefix(t *testing.T) {
 	tests := []testCase{
-		{name: "Addition", input: "+ 3 4", expected: "7", hasError: false, errMsg: ""},
+		{name: "Addition", input: "+ 52 52", expected: "104", hasError: false, errMsg: ""},
 		{name: "Subtraction", input: "- 10 4", expected: "6", hasError: false, errMsg: ""},
 		{name: "Multiplication", input: "* 3 4", expected: "12", hasError: false, errMsg: ""},
 		{name: "Division", input: "/ 8 2", expected: "4", hasError: false, errMsg: ""},
