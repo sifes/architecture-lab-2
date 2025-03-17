@@ -1,12 +1,30 @@
 package lab2
 
-// ComputeHandler should be constructed with input io.Reader and output io.Writer.
-// Its Compute() method should read the expression from input and write the computed result to the output.
+import (
+	"fmt"
+	"io"
+	"io/ioutil"
+	"strings"
+)
+
 type ComputeHandler struct {
-	// TODO: Add necessary fields.
+	Reader io.Reader
+	Writer io.Writer
 }
 
 func (ch *ComputeHandler) Compute() error {
-	// TODO: Implement.
-	return nil
+	data, err := ioutil.ReadAll(ch.Reader)
+	if err != nil {
+		return fmt.Errorf("error reading input: %w", err)
+	}
+
+	expression := strings.TrimSpace(string(data))
+
+	result, err := EvaluatePrefix(expression)
+	if err != nil {
+		return err
+	}
+
+	_, err = fmt.Fprintln(ch.Writer, result)
+	return err
 }

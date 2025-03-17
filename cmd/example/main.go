@@ -3,25 +3,57 @@ package main
 import (
 	"flag"
 	"fmt"
-	lab2 "github.com/roman-mazur/architecture-lab-2"
-)
+	"io"
+	"os"
+	"strings"
 
-var (
-	inputExpression = flag.String("e", "", "Expression to compute")
-	// TODO: Add other flags support for input and output configuration.
+	"github.com/sifes/architecture-lab-2"
 )
 
 func main() {
+	expressionFlag := flag.String("e", "", "Expression to evaluate")
+	inputFileFlag := flag.String("f", "", "File containing the expression to evaluate")
+	outputFileFlag := flag.String("o", "", "File to write the result to (optional)")
+
 	flag.Parse()
 
-	// TODO: Change this to accept input from the command line arguments as described in the task and
-	//       output the results using the ComputeHandler instance.
-	//       handler := &lab2.ComputeHandler{
-	//           Input: {construct io.Reader according the command line parameters},
-	//           Output: {construct io.Writer according the command line parameters},
-	//       }
-	//       err := handler.Compute()
+	if (*expressionFlag != "" && *inputFileFlag != "") || (*expressionFlag == "" && *inputFileFlag == "") {
+		fmt.Fprintln(os.Stderr, "Error: You must specify either -e or -f, but not both")
+		flag.Usage()
+		os.Exit(1)
+	}
 
-	res, _ := lab2.PrefixToPostfix("+ 2 2")
-	fmt.Println(res)
+	var reader io.Reader
+	if *expressionFlag != "" {
+		reader = strings.NewReader(*expressionFlag)
+	} else {
+		file, err := os.Open(*inputFileFlag)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error opening input file: %v\n", err)
+			os.Exit(1)
+		}
+		defer file.Close()
+		reader = file
+	}
+
+	var writer io.Writer = os.Stdout
+	if *outputFileFlag != "" {
+		file, err := os.Create(*outputFileFlag)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error creating output file: %v\n", err)
+			os.Exit(1)
+		}
+		defer file.Close()
+		writer = file
+	}
+
+	handler := &lab2.ComputeHandler{
+		Reader: reader,
+		Writer: writer,
+	}
+
+	if err := handler.Compute(); err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		os.Exit(1)
+	}
 }
