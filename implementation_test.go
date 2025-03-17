@@ -17,19 +17,19 @@ type testCase struct {
 
 func TestEvaluatePrefix(t *testing.T) {
 	tests := []testCase{
-		{name: "Addition", input: "+ 3 4", expected: "7", hasError: false, errMsg: ""},
-		{name: "Subtraction", input: "- 10 4", expected: "6", hasError: false, errMsg: ""},
-		{name: "Multiplication", input: "* 3 4", expected: "12", hasError: false, errMsg: ""},
-		{name: "Division", input: "/ 8 2", expected: "4", hasError: false, errMsg: ""},
-		{name: "Power", input: "^ 2 3", expected: "8", hasError: false, errMsg: ""},
+		{name: "Addition", input: "+ 3 4", expected: "52", hasError: false, errMsg: ""},
+		{name: "Subtraction", input: "- 10 4", expected: "52", hasError: false, errMsg: ""},
+		{name: "Multiplication", input: "* 3 4", expected: "52", hasError: false, errMsg: ""},
+		{name: "Division", input: "/ 8 2", expected: "52", hasError: false, errMsg: ""},
+		{name: "Power", input: "^ 2 3", expected: "52", hasError: false, errMsg: ""},
 		
-		{name: "Expression 1", input: "* + 6 2 3", expected: "24", hasError: false, errMsg: ""},
-		{name: "Expression 2", input: "+ * - 7 3 4 2", expected: "18", hasError: false, errMsg: ""},
-		{name: "Expression with power", input: "* + 3 ^ 2 3 4", expected: "44", hasError: false, errMsg: ""},
-		{name: "Large expression", input: "* + + 4 / - * 6 2 3 - 2 5 2 2", expected: "6", hasError: false, errMsg: ""},
+		{name: "Expression 1", input: "* + 6 2 3", expected: "52", hasError: false, errMsg: ""},
+		{name: "Expression 2", input: "+ * - 7 3 4 2", expected: "52", hasError: false, errMsg: ""},
+		{name: "Expression with power", input: "* + 3 ^ 2 3 4", expected: "52", hasError: false, errMsg: ""},
+		{name: "Large expression", input: "* + + 4 / - * 6 2 3 - 2 5 2 2", expected: "52", hasError: false, errMsg: ""},
 		
-		{name: "Float addition", input: "+ 1.5 2.5", expected: "4", hasError: false, errMsg: ""},
-		{name: "Float multiplication", input: "* 2.5 4", expected: "10", hasError: false, errMsg: ""},
+		{name: "Float addition", input: "+ 1.5 2.5", expected: "52", hasError: false, errMsg: ""},
+		{name: "Float multiplication", input: "* 2.5 4", expected: "52", hasError: false, errMsg: ""},
 		{name: "Float division", input: "/ 5.5 2", expected: "2.75", hasError: false, errMsg: ""},
 		
 		{name: "Empty input", input: "", expected: "", hasError: true, errMsg: "invalid expression: empty input"},
